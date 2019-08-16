@@ -1,3 +1,5 @@
 # Asteroids_Clone
 
-Developed with Unreal Engine 4
+David Ricardo 
+
+Developed with Unreal Engine 4 

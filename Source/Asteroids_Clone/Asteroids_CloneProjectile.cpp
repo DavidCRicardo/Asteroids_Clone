@@ -4,6 +4,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/Classes/Sound/SoundCue.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Engine/StaticMesh.h"
 
@@ -11,6 +12,10 @@ AAsteroids_CloneProjectile::AAsteroids_CloneProjectile()
 {
 	// Static reference to the mesh to use for the projectile
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ProjectileMeshAsset(TEXT("/Game/Asteroids_Clone/Meshes/ShipProjectile.ShipProjectile"));
+			
+	static ConstructorHelpers::FObjectFinder<USoundCue> iTeleport(TEXT("/Game/Audio/Explosion_Cue"));
+	MySoundCue = iTeleport.Object;
+
 
 	// Create mesh component for the projectile sphere
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMesh0"));
@@ -36,6 +41,7 @@ AAsteroids_CloneProjectile::AAsteroids_CloneProjectile()
 
 void AAsteroids_CloneProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+
 	// Only add impulse and destroy projectile if we hit a physics
 	if ((OtherActor != NULL) && (OtherActor != this) /*&& (OtherComp != NULL) && OtherComp->IsSimulatingPhysics()*/)
 	{
@@ -50,10 +56,12 @@ void AAsteroids_CloneProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* Oth
 		if (MyAsteroid->Level_Asteroid == 1)
 		{
 			MyAsteroid->Destroy();
+			UAudioComponent* AudioComponent = UGameplayStatics::SpawnSoundAtLocation(this, MySoundCue, MyAsteroid->GetTransform().GetLocation(), FRotator::ZeroRotator, 0.75f, 1.0f, 0.0f, nullptr, nullptr, true);
 		}
 		else
 		{
 			MyAsteroid->Level_Asteroid -= 1;
+			UAudioComponent* AudioComponent = UGameplayStatics::SpawnSoundAtLocation(this, MySoundCue, MyAsteroid->GetTransform().GetLocation(), FRotator::ZeroRotator, 0.75f, 1.0f, 0.0f, nullptr, nullptr, true);
 			MyAsteroid->SpawnAgain(MyAsteroid->Level_Asteroid, MyAsteroid->GetActorLocation());
 			MyAsteroid->Destroy();
 		}

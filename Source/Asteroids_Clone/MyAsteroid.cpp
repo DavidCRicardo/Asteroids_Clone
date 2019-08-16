@@ -25,7 +25,6 @@ AMyAsteroid::AMyAsteroid()
 		Mesh->SetStaticMesh(RockAsset.Object);
 	}
 	Mesh->AttachTo(Root);
-	//Mesh->SetSimulatePhysics(true);
 
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
 	CapsuleComponent->InitCapsuleSize(90, 150);
@@ -47,6 +46,9 @@ AMyAsteroid::AMyAsteroid()
 	//Speed_X = 0.f;
 	//Speed_Y = 0.f;
 	Speed_Z = 0.f;
+
+	MaxSpeed = 20;
+	MinSpeed = -20;
 }
 
 // Called when the game starts or when spawned
@@ -54,13 +56,15 @@ void AMyAsteroid::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerRef = GetWorld()->GetFirstPlayerController()->GetPawn();
+	//PlayerRef = GetWorld()->GetFirstPlayerController()->GetPawn();
 	MyPawn = Cast<AAsteroids_ClonePawn>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	MyGM = (AAsteroids_CloneGameMode*) GetWorld()->GetAuthGameMode();
 
 	aux1 = false;
 
 	FMath rand;
+	int32 randomNumberX;
+	int32 randomNumberY;
 
 	/*LevelAsteroid*/
 	Level_Asteroid = rand.RandRange(1, 2);
@@ -75,32 +79,29 @@ void AMyAsteroid::BeginPlay()
 		//CapsuleComponent->RelativeScale3D = FVector(3, 2, 2);
 	}
 
-	/*GetInitialLocation*/
+	/*GetInitialLocation*/ 
 	CurrentMeshLocation = this->GetActorLocation();
-
-	int32 randomNumberX;
-	int32 randomNumberY;
 
 	if (MyGM->randomLocation == 0)//spawn from left
 	{
-		randomNumberX = rand.RandRange(0, 10); //don't move to left
-		randomNumberY = rand.RandRange(-10, 10);
+		randomNumberX = rand.RandRange(0, MaxSpeed); //don't move to left
+		randomNumberY = rand.RandRange(MinSpeed, MaxSpeed);
 	}
 	else if (MyGM->randomLocation == 1)//spawn from bottom
 	{
-		randomNumberX = rand.RandRange(-10, 10);
-		randomNumberY = rand.RandRange(0, 10); //don't move to down
+		randomNumberX = rand.RandRange(MinSpeed, MaxSpeed);
+		randomNumberY = rand.RandRange(0, MaxSpeed); //don't move to down
 	}
 	else if (MyGM->randomLocation == 2)//spawn from right
 	{
-		randomNumberX = rand.RandRange(-10, 0); //don't move to right
-		randomNumberY = rand.RandRange(-10, 10);
+		randomNumberX = rand.RandRange(MinSpeed, 0); //don't move to right
+		randomNumberY = rand.RandRange(MinSpeed, MaxSpeed);
 
 	}
 	else if (MyGM->randomLocation == 3)//spawn from top
 	{
-		randomNumberX = rand.RandRange(-10, 10);
-		randomNumberY = rand.RandRange(-10, 0); //don't move to up
+		randomNumberX = rand.RandRange(MinSpeed, MaxSpeed);
+		randomNumberY = rand.RandRange(MinSpeed, 0); //don't move to up
 	}
 
 	Speed_X = randomNumberX;

@@ -12,6 +12,7 @@ AAsteroids_CloneGameMode::AAsteroids_CloneGameMode()
 	DefaultPawnClass = AAsteroids_ClonePawn::StaticClass();
 
 	StartRotation = FRotator(0.0f, 0.0f, 0.0f);
+
 }
 
 void AAsteroids_CloneGameMode::BeginPlay()
@@ -19,17 +20,16 @@ void AAsteroids_CloneGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	GetWorldTimerManager().SetTimer(MemberTimerHandle, this, &AAsteroids_CloneGameMode::SpawnAsteroid, 0.5f, true, 1.0f);
+	MyPawn = Cast<AAsteroids_ClonePawn>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 }
 
 // Called every frame
 void AAsteroids_CloneGameMode::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AAsteroids_CloneGameMode::SpawnAsteroid() {
-	
 	FMath rand;
 
 	randomLocation = rand.RandRange(0, 3);

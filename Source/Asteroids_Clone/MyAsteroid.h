@@ -64,9 +64,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	class AActor* PlayerRef = nullptr;
 
+	/*Speed*/
+	UPROPERTY(EditAnywhere, Category = MySpeed)
+	int32 MaxSpeed;
+	UPROPERTY(EditAnywhere, Category = MySpeed)
+	int32 MinSpeed;
+
 	class AAsteroids_ClonePawn* MyPawn = nullptr;	
 	class AAsteroids_CloneGameMode* MyGM;
-
+	
 	UFUNCTION()
 	void SpawnAgain(int32 NewLevel, FVector NewLocation);
 

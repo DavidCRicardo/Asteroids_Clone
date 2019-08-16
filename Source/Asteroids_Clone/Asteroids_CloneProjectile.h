@@ -29,6 +29,7 @@ public:
 
 	class AAsteroids_ClonePawn* MyPawn = nullptr;
 	class AMyAsteroid* MyAsteroid;
+	class USoundCue* MySoundCue;
 
 	/** Function to handle the projectile hitting something */
 	UFUNCTION()
@@ -38,5 +39,6 @@ public:
 	FORCEINLINE UStaticMeshComponent* GetProjectileMesh() const { return ProjectileMesh; }
 	/** Returns ProjectileMovement subobject **/
 	FORCEINLINE UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
 };
 

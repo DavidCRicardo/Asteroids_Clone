@@ -7,6 +7,7 @@
 #include "MyAsteroid.h"
 #include "Runtime/Engine/Public/TimerManager.h"
 #include "math.h"
+#include "Asteroids_ClonePawn.h"
 #include "Asteroids_CloneGameMode.generated.h"
 
 UCLASS(MinimalAPI)
@@ -31,4 +32,8 @@ public:
 	FTimerHandle MemberTimerHandle;
 
 	int32 randomLocation;
+
+	class AAsteroids_ClonePawn* MyPawn = nullptr;
+	class AMyAsteroid* MyAsteroid;
+
 };
