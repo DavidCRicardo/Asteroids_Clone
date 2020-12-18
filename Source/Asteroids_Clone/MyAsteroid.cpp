@@ -24,12 +24,15 @@ AMyAsteroid::AMyAsteroid()
 	{
 		Mesh->SetStaticMesh(RockAsset.Object);
 	}
-	Mesh->AttachTo(Root);
+	//Mesh->AttachTo(Root);
+	Mesh->AttachToComponent(Root, FAttachmentTransformRules::SnapToTargetNotIncludingScale, NAME_None);
 
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
 	CapsuleComponent->InitCapsuleSize(90, 150);
-	CapsuleComponent->RelativeLocation = FVector(0.000000, 0.000000, 100.000000);
-	CapsuleComponent->RelativeScale3D = FVector(1.5, 1, 1);
+	CapsuleComponent->SetRelativeLocation(FVector(0.000000, 0.000000, 100.000000));
+	CapsuleComponent->SetRelativeScale3D(FVector(1.5, 1, 1));
+	//CapsuleComponent->RelativeLocation = FVector(0.000000, 0.000000, 100.000000);
+	//CapsuleComponent->RelativeScale3D = FVector(1.5, 1, 1);
 	CapsuleComponent->BodyInstance.SetCollisionProfileName("OverlapAll");
 	CapsuleComponent->SetupAttachment(Mesh);
 	CapsuleComponent->SetVisibility(true);
@@ -70,12 +73,14 @@ void AMyAsteroid::BeginPlay()
 	Level_Asteroid = rand.RandRange(1, 2);
 	if (Level_Asteroid == 1)
 	{
-		Mesh->RelativeScale3D = FVector(1, 1, 1);
-		CapsuleComponent->RelativeScale3D = FVector(1.5, 1, 1);
-
+		//Mesh->RelativeScale3D = FVector(1, 1, 1); //4.23
+		//CapsuleComponent->RelativeScale3D = FVector(1.5, 1, 1); //4.23
+		Mesh->SetRelativeScale3D(FVector(1, 1, 1));
+		CapsuleComponent->SetRelativeScale3D(FVector(1.5, 1, 1));
 	}
 	else if (Level_Asteroid == 2) {
-		Mesh->RelativeScale3D = FVector(2, 2, 2);
+		Mesh->SetRelativeScale3D(FVector(2, 2, 2));
+		//Mesh->RelativeScale3D = FVector(2, 2, 2); //4.23
 		//CapsuleComponent->RelativeScale3D = FVector(3, 2, 2);
 	}
 
