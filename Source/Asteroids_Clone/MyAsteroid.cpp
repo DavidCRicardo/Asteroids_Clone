@@ -24,9 +24,10 @@ AMyAsteroid::AMyAsteroid()
 	{
 		Mesh->SetStaticMesh(RockAsset.Object);
 	}
-	//Mesh->AttachTo(Root);
-	Mesh->AttachToComponent(Root, FAttachmentTransformRules::SnapToTargetNotIncludingScale, NAME_None);
-
+	//Mesh->AttachTo(Root); //4.23
+	//Mesh->AttachToComponent(Root, FAttachmentTransformRules::SnapToTargetNotIncludingScale, NAME_None); //4.25
+	Mesh->SetupAttachment(Root); //Update when Packaging for Linux // 4.25
+	
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
 	CapsuleComponent->InitCapsuleSize(90, 150);
 	CapsuleComponent->SetRelativeLocation(FVector(0.000000, 0.000000, 100.000000));
