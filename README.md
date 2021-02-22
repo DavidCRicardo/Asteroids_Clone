@@ -13,4 +13,10 @@ Log
 > Bug Fixes
 > It's working fine on UE4.25
 
+[22/02/2020]
+> Bug Fixes 
+> Support for Linux 
+ 
+
+
 This master version is actually: 4.25
